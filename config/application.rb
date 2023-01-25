@@ -18,6 +18,15 @@ module SolidusTaxjarOverrides
       end
     end
 
+    # From: https://guides.solidus.io/customization/customizing-the-core/#:~:text=config/application.rb
+    overrides = "#{Rails.root}/app/overrides"
+    Rails.autoloaders.main.ignore(overrides)
+    config.to_prepare do
+      Dir.glob("#{overrides}/**/*.rb").each do |override|
+        load override
+      end
+    end
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
